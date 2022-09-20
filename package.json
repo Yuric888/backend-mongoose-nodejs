@@ -1,0 +1,28 @@
+{
+  "name": "backend-nodejs-mongose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+  
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuric888/backend-mongoose-nodejs.git"
+  },
+  "author": "yuric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuric888/backend-mongoose-nodejs/issues"
+  },
+  "homepage": "https://github.com/Yuric888/backend-mongoose-nodejs#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1",
+    "nodemon": "^2.0.20"
+  }
+}
