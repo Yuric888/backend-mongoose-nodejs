@@ -5,8 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-  
-    "start": "nodemon server.js"
+    "start": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +18,12 @@
   },
   "homepage": "https://github.com/Yuric888/backend-mongoose-nodejs#readme",
   "dependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/node": "^7.19.1",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
     "mongoose": "^6.6.1",
     "nodemon": "^2.0.20"
