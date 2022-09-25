@@ -1,4 +1,5 @@
-// import PostModel from '../../models/PostModel.js'
+
+import PostModel from "../models/PostModel.js";
 
 // export const getPosts = async (req, res) => {
 //     try{
@@ -18,7 +19,18 @@
 // export const createPost = (req, res) => {
 //     res.send('CREATE POST SUCCESS')
 // }
-export const getHomePage = (req, res) => {
-   return res.render('index.ejs')
+export const getHomePage = async (req, res) => {
+    try{
+        const post = new PostModel({
+            title: 'test',
+            content: 'test content'
+        });
+        post.save();
+        const postMessage = await PostModel.findOne();
+        console.log(postMessage);
+        return res.render('index.ejs', {data: postMessage})
+    }catch(err){
+        res.status(500).json({message: err.message})
+    }
+   
 }
-
