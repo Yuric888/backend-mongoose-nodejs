@@ -15,24 +15,47 @@
   <a href="#contact">Contact</a>
   <a href="#about">About</a>
 </div>
-
-<%= data %>
 <table>
+  <thead>
   <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Price-1</th>
+    <th>Price-2</th>
+    <th>Action</th>
   </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
+  </thead>
+  <tbody>
+     <% customers.reverse().forEach(function(item){ %>
+      <tr>
+        <td><%= item.title %></td>
+        <td><%= item.content %></td>
+        <td><%= item._id %></td>
+        <td><img src="<%= item.image %>" /></td>
+        <td>
+          <button type="button">Edit</button>
+          <button type="button"><a href="/delete/<%= item._id %>">Delete</a></button>
+        </td>
+      </tr>
+      <% }) %>
+ </tbody>
 </table>
+<hr />
+<%= customers %>
+<hr />
+ <form action="/post" method="post">
+      <h2>Create new product</h2>
+    <label for="fname">Title</label>
+    <input required type="text" id="title" name="title" placeholder="">
+    <label for="lname">Content</label>
+    <input required type="text" id="content" name="content" placeholder="">
+    <label for="image">Image</label>
+    <input name="image" type="file" id="image" />
+    <!-- <label for="price_1">Price-1</label>
+    <input required name="price_1" type="text" id="price_1" />
+    <label for="price_2">Price-2</label>
+    <input required name="price_2" type="text" id="price_2" /> -->
+    <input type="submit" value="Submit" />
+  </form>
 </body>
 </html>

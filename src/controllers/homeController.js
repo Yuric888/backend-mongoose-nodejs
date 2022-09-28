@@ -1,36 +1,40 @@
 
 import PostModel from "../models/PostModel.js";
 
-// export const getPosts = async (req, res) => {
-//     try{
-//         const post = new PostModel({
-//             title: 'test',
-//             content: 'test content'
-//         });
-//         post.save();
-//         const postMessage = await PostModel.findOne();
-//         console.log(postMessage);
-//         res.status(200).json(postMessage);
-//     }catch(err){
-//         res.status(500).json({message: err.message})
-//     }
-// }
-
-// export const createPost = (req, res) => {
-//     res.send('CREATE POST SUCCESS')
-// }
-export const getHomePage = async (req, res) => {
-    try{
-        const post = new PostModel({
-            title: 'test',
-            content: 'test content'
-        });
-        post.save();
-        const postMessage = await PostModel.findOne();
-        console.log(postMessage);
-        return res.render('index.ejs', {data: postMessage})
-    }catch(err){
-        res.status(500).json({message: err.message})
+export const getHomePage = async (req, res, next) => {
+ PostModel.find((err, data) => {
+    if(!err){
+         res.render('index.ejs', {
+        customers: data
+        })
+    }else{
+        console.log('Failed to retrieve the Users List: ', err )
     }
-   
+  });
+
+}
+export const createPost = async (req, res) => {
+//   const obj = JSON.parse(JSON.stringify(req.body)); // req.body = [Object: null prototype] { title: 'product' }
+
+// console.log(obj); // { title: 'product' }
+
+    const data = req.body;
+    let customer = await new PostModel({
+        title: data.title,
+        content: data.content,
+        image: data.image
+    });
+    customer = await customer.save();
+
+   res.redirect('/')
+}
+
+export const deletePost = async (req, res, next) => {
+   PostModel.findByIdAndRemove(req.params.id, (err, doc) =>{
+        if(!err){
+            res.redirect('/')
+        }else{
+            console.log('Failed to Delete user Details', err)
+        }
+    })
 }
