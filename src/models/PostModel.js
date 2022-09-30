@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: false
+    required: true
   },
   price_1: {
     type: Number,

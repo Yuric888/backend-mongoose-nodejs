@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
-    <h1>Hello word from ejs</h1>
     <div class="topnav">
   <a class="active" href="#home">Home</a>
-  <a href="#news">News</a>
+  <!-- <a href="#news">News</a>
   <a href="#contact">Contact</a>
-  <a href="#about">About</a>
+  <a href="#about">About</a> -->
 </div>
 <table>
   <thead>
@@ -31,7 +30,7 @@
         <td><%= item.title %></td>
         <td><%= item.content %></td>
         <td><%= item._id %></td>
-        <td><img src="<%= item.image %>" /></td>
+        <td><img src="./images/<%= item.image %>" /></td>
         <td>
           <button type="button">Edit</button>
           <button type="button"><a href="/delete/<%= item._id %>">Delete</a></button>
@@ -40,10 +39,7 @@
       <% }) %>
  </tbody>
 </table>
-<hr />
-<%= customers %>
-<hr />
- <form action="/post" method="post">
+ <form action="/upload" method="post" enctype="multipart/form-data">
       <h2>Create new product</h2>
     <label for="fname">Title</label>
     <input required type="text" id="title" name="title" placeholder="">

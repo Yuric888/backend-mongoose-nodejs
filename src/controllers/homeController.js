@@ -14,19 +14,14 @@ export const getHomePage = async (req, res, next) => {
 
 }
 export const createPost = async (req, res) => {
-//   const obj = JSON.parse(JSON.stringify(req.body)); // req.body = [Object: null prototype] { title: 'product' }
-
-// console.log(obj); // { title: 'product' }
-
-    const data = req.body;
-    let customer = await new PostModel({
-        title: data.title,
-        content: data.content,
-        image: data.image
-    });
-    customer = await customer.save();
-
-   res.redirect('/')
+    console.log('req.file :>> ', req.file);
+    const user = new PostModel({
+        title: req.body.title,
+        content: req.body.content,
+        image: req.file.filename
+    })
+    user.save()
+  res.redirect('/')
 }
 
 export const deletePost = async (req, res, next) => {
