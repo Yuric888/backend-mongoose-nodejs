@@ -5,53 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node.JS MongooseDB</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css"/>
+    <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: 'textarea'
+      });
+    </script> -->
 </head>
 <body>
-    <div class="topnav">
-  <a class="active" href="#home">Home</a>
-  <!-- <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a> -->
-</div>
-<table>
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Content</th>
-    <th>Price-1</th>
-    <th>Price-2</th>
-    <th>Action</th>
-  </tr>
-  </thead>
-  <tbody>
-     <% customers.reverse().forEach(function(item){ %>
-      <tr>
-        <td><%= item.title %></td>
-        <td><%= item.content %></td>
-        <td><%= item._id %></td>
-        <td><img src="./images/<%= item.image %>" /></td>
-        <td>
-          <button type="button">Edit</button>
-          <button type="button"><a href="/delete/<%= item._id %>">Delete</a></button>
-        </td>
-      </tr>
-      <% }) %>
- </tbody>
-</table>
- <form action="/upload" method="post" enctype="multipart/form-data">
-      <h2>Create new product</h2>
-    <label for="fname">Title</label>
-    <input required type="text" id="title" name="title" placeholder="">
-    <label for="lname">Content</label>
-    <input required type="text" id="content" name="content" placeholder="">
-    <label for="image">Image</label>
-    <input name="image" type="file" id="image" />
-    <!-- <label for="price_1">Price-1</label>
-    <input required name="price_1" type="text" id="price_1" />
-    <label for="price_2">Price-2</label>
-    <input required name="price_2" type="text" id="price_2" /> -->
-    <input type="submit" value="Submit" />
-  </form>
+  <%- include('./includes/navbar.ejs') -%>
+  <%- include('./includes/form.ejs') -%>
+  <div class="container mt-3 mb-5 w-100 d-flex justify-content-center">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product</button>
+  </div>
+
+  <%- include('./includes/table.ejs') -%>
+  <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<script src="/js/index.js"></script>
 </body>
 </html>

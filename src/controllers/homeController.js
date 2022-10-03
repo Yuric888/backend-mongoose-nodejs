@@ -1,35 +1,94 @@
 
 import PostModel from "../models/PostModel.js";
+import fs from 'fs';
+import {promisify } from 'util'
+import path from 'path';
+const unlinkAsync = promisify(fs.unlink)
 
-export const getHomePage = async (req, res, next) => {
- PostModel.find((err, data) => {
-    if(!err){
+
+export const getHomePage = async (req, res) => {
+    try {
+      const data = await PostModel.find();
          res.render('index.ejs', {
         customers: data
         })
-    }else{
-        console.log('Failed to retrieve the Users List: ', err )
+    }catch (err) {
+        res.status(500).send({message: err.message || "Error Occured"})
     }
-  });
+ 
 
 }
+
+export const getAllPost = async (req, res) => {
+    try{
+        const data = await PostModel.find();
+        res.status(200).json(data);
+    }catch (err) {
+        res.status(500).send({message: err.message || "Error Occured"})
+    }
+}
+
 export const createPost = async (req, res) => {
-    console.log('req.file :>> ', req.file);
-    const user = new PostModel({
-        title: req.body.title,
-        content: req.body.content,
-        image: req.file.filename
-    })
-    user.save()
-  res.redirect('/')
+    try{
+        if(req.body){
+            const user = new PostModel({
+                title: req.body.title,
+                content: req.body.content,
+                image: req.file.filename,
+                price_1: req.body.price_1,
+                price_2: req.body.price_2 ?? null
+                })
+            user.save()
+        }
+         res.redirect('/')
+    }catch(err){
+        res.status(500).send({message: err.message || "Error Occured"})
+    }
+   
 }
 
 export const deletePost = async (req, res, next) => {
-   PostModel.findByIdAndRemove(req.params.id, (err, doc) =>{
-        if(!err){
-            res.redirect('/')
-        }else{
-            console.log('Failed to Delete user Details', err)
+    try{
+        const id = req.params.id;
+        const data = await PostModel.findById(id);
+        if(data){
+            await fs.unlink(`./src/public/images/${data.image}`, (err => {
+                if(err) console.log('err', err)
+                else{
+                    console.log('file image deleted');
+                }
+            }));
+            await PostModel.findByIdAndDelete(id);
         }
-    })
+        
+        res.redirect('/')
+    }catch(err){
+        res.status(500).send({message: err.message || "Error Occured"})
+    }
+}
+
+export const getOnePost = async(req, res) => {
+  try{
+      const id = req.params.id;
+      if(id){
+        const post = await PostModel.findById(id)
+        res.render('post.ejs', {data: post})
+      }
+  }catch(err){
+ console.log('err :>> ', err);
+         res.status(500).send({message: err.message || "Error Occured"})
+  }
+}
+export const updatePost = async (req, res)=>{
+    try{
+        const id = req.params.id
+      if(id && req.body){
+        await PostModel.findByIdAndUpdate(id, req.body);
+        res.redirect('/')
+      }
+       
+    }catch(err){
+        console.log('err :>> ', err);
+         res.status(500).send({message: err.message || "Error Occured"})
+    }
 }

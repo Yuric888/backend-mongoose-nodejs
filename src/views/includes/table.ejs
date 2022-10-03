@@ -1,0 +1,27 @@
+<table class="container table table-striped table-hover table-bordered">
+  <thead>
+  <tr>
+    <th scope="col ">Images</th>
+    <th scope="col ">Title</th>
+    <th scope="col ">Content</th>
+    <th scope="col ">Price_1</th>
+    <th scope="col">Price_2</th>
+    <th scope="col ">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+     <% customers.reverse().forEach(function(item){ %>
+      <tr>
+        <td class="image"><div><img src="./images/<%= item.image %>" /></div></td>
+        <td><%= item.title %></td>
+        <td><%= item.content %></td>
+        <td><%= item.price_1 %></td>
+        <td><%= item.price_2 %></td>
+        <td>
+          <button type="button" class="btn btn-primary mr-3 mb-3"><a class="text-white" href="/getOne/<%= item._id %>">Edit</a></button>
+          <button type="button" class="btn btn-danger"><a class="text-white" href="/delete/<%= item._id %>">Delete</a></button>
+        </td>
+      </tr>
+      <% }) %>
+ </tbody>
+</table>

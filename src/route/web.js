@@ -2,7 +2,13 @@ import express from 'express';
 import multer from 'multer';
 import PostModel from '../models/PostModel.js';
 import path from 'path';
-import { getHomePage,createPost,deletePost } from '../controllers/homeController.js'
+import { getHomePage,
+  createPost,
+  deletePost,
+  getOnePost,
+  updatePost, 
+  getAllPost
+} from '../controllers/homeController.js'
 // import {getPosts,createPost} from '../controllers/posts.js'
 
 const router = express.Router();
@@ -13,7 +19,6 @@ const router = express.Router();
     }
   ,
     filename: function (req, file, cb) {
-     console.log('file :>> ', file);
     cb(null,Date.now() + path.extname(file.originalname));
     }
   });
@@ -24,33 +29,19 @@ const upload = multer({
 
 const initWebRoute = (app) => {
 
- 
+  router.get('/', getHomePage);
+  router.get('/getAllPost', getAllPost)
 
-    router.get('/', getHomePage);
+  router.post('/upload',upload.single('image') ,createPost)
 
-    //Post Method
-// router.post('/post',upload.single('image'), createPost);
+  router.get('/delete/(:id)',upload.single('image'), deletePost)
 
-router.post('/upload',upload.single('image') ,createPost)
-
-
-//Get all Method
-router.get('/delete/(:id)', deletePost)
-
-//Get by ID Method
-router.get('/getOne/:id', (req, res) => {
-    res.send('Get by ID API')
-})
+  //Get by ID Method
+  router.get('/getOne/(:id)', getOnePost)
 
 //Update by ID Method
-router.patch('/update/:id', (req, res) => {
-    res.send('Update by ID API')
-})
+router.post('/update/(:id)', updatePost)
 
-//Delete by ID Method
-router.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API')
-})
 return app.use('/', router)
 }
 
