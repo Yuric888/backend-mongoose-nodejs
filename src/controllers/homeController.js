@@ -34,7 +34,7 @@ export const createPost = async (req, res) => {
             const user = new PostModel({
                 title: req.body.title,
                 content: req.body.content,
-                image: req.file.filename,
+                image: req.file ? req.file.filename : null,
                 price_1: req.body.price_1,
                 price_2: req.body.price_2 ?? null
                 })
