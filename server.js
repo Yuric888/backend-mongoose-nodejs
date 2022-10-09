@@ -18,7 +18,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false, limit: '30mb'}));
 // app.use()
 app.use(cors());
-app.use(cors({origin: process.env.URL_REACT }));
+app.use(cors({origin: [
+    process.env.URL_REACT,
+    'http://localhost:3000'
+] }));
 
 //init webrouter
 
