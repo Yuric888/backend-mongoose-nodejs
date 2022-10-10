@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: false, limit: '30mb'}));
 // app.use()
 app.use(cors());
 app.use(cors({origin: [
-    process.env.REACT_URL,
+    process.env.URL_REACT,
     'http://localhost:3000'
 ] }));
 
