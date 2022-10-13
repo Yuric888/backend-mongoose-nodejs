@@ -12,7 +12,7 @@
   <tbody>
      <% customers.reverse().forEach(function(item){ %>
       <tr>
-        <td class="image"><div><img src="./images/<%= item.image %>" /></div></td>
+        <td class="image"><div><img src="<%= item.image.url %>" /></div></td>
         <td><%= item.title %></td>
         <td><%= item.content %></td>
         <td><%= item.price_1 %></td>

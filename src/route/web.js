@@ -2,6 +2,8 @@ import express from 'express';
 import multer from 'multer';
 import PostModel from '../models/PostModel.js';
 import path from 'path';
+import {v2 as cloudinary} from 'cloudinary';
+import dotenv  from 'dotenv'
 import { getHomePage,
   createPost,
   deletePost,
@@ -13,11 +15,16 @@ import { getHomePage,
 
 const router = express.Router();
 
+
+dotenv.config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
+
  const Storage = multer.diskStorage({
-    destination:function (req, file, cb) {
-      cb(null, './src/public/images')
-    }
-  ,
     filename: function (req, file, cb) {
     cb(null,Date.now() + path.extname(file.originalname));
     }
@@ -40,7 +47,7 @@ const initWebRoute = (app) => {
   router.get('/getOne/(:id)', getOnePost)
 
 //Update by ID Method
-router.post('/update/(:id)', updatePost)
+router.post('/update/(:id)',upload.single('image'), updatePost)
 
 return app.use('/', router)
 }

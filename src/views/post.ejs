@@ -15,27 +15,34 @@
     </head>
 <body>
     <% if(data !== null){ %>
-<form class="container-xxl mt-5 mb-5" action="/update/<%= data._id %>" method="post">
+<form class="container-xxl mt-5 mb-5" action="/update/<%= data._id %>" method="post" enctype="multipart/form-data">
     <h1>Upgrade Post</h1>
-  <div class="mb-3 form-group">
-  <label for="title" class="form-label">Title</label>
-  <input value="<%= data.title %>" name="title" required type="text" class="form-control" id="title" placeholder="Enter name...">
-</div>
-<div class="mb-3 form-group">
-  <label for="content" class="form-label">Content</label>
-  <textarea name="content" class="form-control" id="content" rows="3">
-   <%= data.content %>
-</textarea>
-</div>
-<div class="mb-3 form-group">
-<label for="price_1">Price-1</label>
-<input required type="number" value="<%= data.price_1 %>" id="price_1" name="price_1" min="1" max="1000000">
-</div>
-<div class="mb-3 form-group">
-<label for="price_2">Price-2</label>
-<input type="number" value="<%= data.price_2 %>" id="price_2" name="price_2" min="1" max="1000000">
-</div>
-  <button type="submit" class="btn btn-primary mt-3 w-25">Send data</button>
+    <div class="mb-3 form-group">
+      <label for="title" class="form-label">Title</label>
+      <input value="<%= data.title %>" name="title" required type="text" class="form-control" id="title" placeholder="Enter name...">
+    </div>
+    <div class="mb-3 form-group">
+      <label for="content" class="form-label">Content</label>
+      <textarea name="content" class="form-control" id="content" rows="3">
+        <%= data.content %>
+      </textarea>
+    </div>
+    <div class="mb-3 form-group">
+      <img src="<%= data.image.url %>" width="200" height="200" />
+    </div>
+    <div class="mb-3">
+      <label for="formFileLg" class="form-label">Change Image</label>
+      <input required name="image" class="form-control form-control-lg" id="formFileLg" type="file">
+    </div>
+    <div class="mb-3 form-group">
+      <label for="price_1">Price-1</label>
+      <input required type="number" value="<%= data.price_1 %>" id="price_1" name="price_1" min="1" max="1000000">
+    </div>
+    <div class="mb-3 form-group">
+      <label for="price_2">Price-2</label>
+      <input type="number" value="<%= data.price_2 %>" id="price_2" name="price_2" min="1" max="1000000">
+    </div>
+    <button type="submit" class="btn btn-primary mt-3 w-25">Send data</button>
 </form>
    <% } %>
    <!-- <form action="/update/<%= data._id %>" method="post">
