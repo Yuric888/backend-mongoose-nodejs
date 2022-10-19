@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 
 import configViewEngine from './src/configs/viewEngine.js';
 import * as dotenv from 'dotenv';
+import initWebUser from './src/route/user.js';
 dotenv.config()
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -41,7 +42,7 @@ database.once('connected', () => {
     console.log('Databse Connected')
 })
 initWebRoute(app);
-
+initWebUser(app);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT} http://localhost:${PORT}` );
 })

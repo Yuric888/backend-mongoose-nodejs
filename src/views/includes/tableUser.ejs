@@ -1,0 +1,28 @@
+<table class="container table table-striped table-hover table-bordered">
+  <thead>
+  <tr>
+    <th scope="col ">STT</th>
+    <th scope="col ">First Name</th>
+    <th scope="col ">Last Name</th>
+    <th scope="col ">Email</th>
+    <th scope="col ">Role</th>
+    <th scope="col ">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+     <% dataUser.forEach(function(item, idx){ %>
+      <tr>
+        <td ><%= idx %></td>
+        <td><%= item.firstName %></td>
+        <td><%= item.lastName %></td>
+        <td><%= item.email %></td>
+        <td><%= item.role %></td>
+        <td>
+          <a href="/user/delete/<%= item._id %>">
+            <button class="btn btn-danger">Delete user</button>
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+ </tbody>
+</table>

@@ -35,7 +35,7 @@ const upload = multer({
 })
 
 const initWebRoute = (app) => {
-
+  //product
   router.get('/', getHomePage);
   router.get('/getAllPost', getAllPost)
 
@@ -46,8 +46,9 @@ const initWebRoute = (app) => {
   //Get by ID Method
   router.get('/getOne/(:id)', getOnePost)
 
-//Update by ID Method
-router.post('/update/(:id)',upload.single('image'), updatePost)
+  //Update by ID Method
+  router.post('/update/(:id)',upload.single('image'), updatePost)
+  // end product
 
 return app.use('/', router)
 }
