@@ -1,0 +1,6 @@
+POST http://localhost:8080/user/product/post HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "634fb8a9a3abdbd7398a0bc5"
+}

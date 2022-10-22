@@ -1,6 +1,7 @@
 import express from 'express';
-import { deleteUser, registerUser } from '../controllers/userController.js';
+import { deleteUser, loginUser, registerUser } from '../controllers/userController.js';
 import UserModel from '../models/UserModel.js';
+import jwt from 'jsonwebtoken'
 const router = express.Router();
 
 const initWebUser = (app) => {
@@ -25,27 +26,14 @@ const initWebUser = (app) => {
     })
 
      //User Login Route
-    router.post('/login-user', async (req, res) => {})
+    router.post('/login-user', async (req, res) => {
+        await loginUser(req.body, 'user', res);
+    })
 
      //Admin Login Route
-    router.post('/login-admin', async (req, res) => {})
-    
-     //Profile Route
-    router.post('/profile', async (req, res) => {})
-
-     //Admin Protected Route
-    router.post('/admin-protected', async (req, res) => {})
-    
-     //User Protected Route
-    router.post('/user-protected', async (req, res) => {})
-    
-//end register
-    
-
-
-
-
-
+    router.post('/login-admin', async (req, res) => {
+        await loginUser(req.body, 'admin', res);
+    })
 
     return app.use('/user', router)
 }

@@ -1,6 +1,8 @@
 import UserModel from '../models/UserModel.js'
-import bcrypt from 'bcryptjs'
-
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config()
 
 //delete User
 export const deleteUser = async (req, res) => {
@@ -57,3 +59,55 @@ const validateEmail = async email => {
 }
 
 // end register
+
+// @DESC to login user (user, admin);
+
+export const loginUser = async (userDesc, role, res) => {
+    let {email, password} = userDesc;
+    
+    const user = await UserModel.findOne({email});
+    if(!user){
+        return res.status(404).json({
+            message: 'Email is not found. Invalid login credentials.',
+            success: false
+        });
+    }
+    // we will check role
+    if(user.role !== role){
+         return res.status(403).json({
+            message: 'Please make sure you are logging in from the right portal role.',
+            success: false
+        });
+    }
+    // we will check password
+    let isMatch = await bcrypt.compare(password, user.password);
+    if(isMatch){
+        //sign in the token and issue it to the user
+        let token = jwt.sign({
+          userId: user._id ,
+        },
+        process.env.TOKEN_SECRET,
+        {
+            expiresIn: '7 days'
+        });
+        // const products = await ProductsBuy.find(user.})
+        let result = {
+            role: user.role,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            token,
+            expiresIn: 168
+        }
+        return res.status(200).json({
+            ...result,
+            message: 'Hurry! You are now loggin in.',
+            success: true
+        })
+    }else{
+         return res.status(403).json({
+            message: 'Incorrect password.',
+            success: false
+        });
+    }
+}

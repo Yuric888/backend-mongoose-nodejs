@@ -37,6 +37,7 @@ const upload = multer({
 const initWebRoute = (app) => {
   //product
   router.get('/', getHomePage);
+    
   router.get('/getAllPost', getAllPost)
 
   router.post('/upload',upload.single('image') ,createPost)
