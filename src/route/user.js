@@ -1,7 +1,7 @@
 import express from 'express';
-import { deleteUser, loginUser, registerUser } from '../controllers/userController.js';
+import { deleteUser, deleteWithAuthen, getAllUser, loginUser, registerUser, requestRefreshToken, userLogout } from '../controllers/userController.js';
 import UserModel from '../models/UserModel.js';
-import jwt from 'jsonwebtoken'
+import { authenToken, authenTokenAdmin } from '../controllers/auth.js';
 const router = express.Router();
 
 const initWebUser = (app) => {
@@ -12,28 +12,26 @@ const initWebUser = (app) => {
             dataUser: dataUser
         })
     })
+    router.get('/all', authenToken, getAllUser)
+    
+    router.delete("/(:id)", authenTokenAdmin, deleteWithAuthen)
     // delete User
-    router.get('/delete/(:id)', deleteUser)
+    router.delete('/delete/(:id)', deleteUser)
     
     //User REgistration Route
-    router.post('/register-user', async (req, res) => {
-        await registerUser(req.body, 'user', res);
-    })
-
-     //Admin REgistration Route
-    router.post('/register-admin', async (req, res) => {
-        await registerUser(req.body, 'admin', res);
+    router.post('/register', async (req, res) => {
+        await registerUser(req.body, res);
     })
 
      //User Login Route
-    router.post('/login-user', async (req, res) => {
-        await loginUser(req.body, 'user', res);
+    router.post('/login', async (req, res) => {
+        await loginUser(req.body, res);
     })
+    // Refresh tokens
+    router.post('/refresh',requestRefreshToken);
 
-     //Admin Login Route
-    router.post('/login-admin', async (req, res) => {
-        await loginUser(req.body, 'admin', res);
-    })
+    // Log out
+    router.post("/logout",authenToken, userLogout)
 
     return app.use('/user', router)
 }

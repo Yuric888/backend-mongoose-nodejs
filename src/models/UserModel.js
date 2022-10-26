@@ -11,16 +11,19 @@ const UserSchema = new mongoose.Schema({
     email:{
         type: String,
         required: true,
+        unique: true,
+        minlength: 6,
+        maxlength: 20
     },
     password: {
         type: String,
         required: true,
+        minlength: 6
     },
-    role:{
-        type: String,
-        default: "user",
-        enum: ['user', 'admin']
-    },
+    admin: {
+        type: Boolean,
+        default: false
+    }
 },{ timestamps: true },
 )
 

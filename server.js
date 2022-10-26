@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-
+import cookieParser from 'cookie-parser'
 import cors from 'cors';
 import initWebRoute  from './src/route/web.js'
 import mongoose from 'mongoose';
@@ -19,11 +19,13 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false, limit: '30mb'}));
 // app.use()
+
 app.use(cors());
 app.use(cors({origin: [
     process.env.URL_REACT,
     'http://localhost:3000'
 ] }));
+app.use(cookieParser())
 
 //init webrouter
 
