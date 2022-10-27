@@ -64,8 +64,9 @@ export const registerUser = async(userDesc, res) =>{
     const hashPassword = await bcrypt.hash(password, 12);
 
     // create a new user
+    let {confirmPassword, ...others} = userDesc
     const newUser = new UserModel({
-        ...userDesc,
+        ...others,
         password: hashPassword,
     });
     await newUser.save();
@@ -74,6 +75,7 @@ export const registerUser = async(userDesc, res) =>{
         success: true
     })
    }catch(err){
+    console.log('err', err)
       return res.status(500).json({
             message: 'Unable to create our account.',
             success: false
@@ -127,22 +129,21 @@ export const loginUser = async (userDesc, res) => {
     if(isMatch){
         //sign in the token and issue it to the user
         const accessToken = generateAccessToken(user);
-        const refreshToken = generateRefreshToken(user);
-        refreshTokensList.push(refreshToken);
+        // const refreshToken = generateRefreshToken(user);
+        // refreshTokensList.push(refreshToken);
         //  Cookie:                                                                
-        res.cookie("refreshToken", refreshToken,{
-            httpOnly: true, 
-            path: '/', 
-            secure: false,
-            sameSite: "strict"
-        })
+        //  res.cookie("refreshToken", refreshToken,{
+        //     httpOnly: true, 
+        //     path: '/', 
+        //     secure: false,
+        //     sameSite: "strict",
+        //     expires: new Date(Date.now() + 25892000000)
+        // })
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         const {password, ...others} = user._doc;
+        const data = {...others,accessToken}
         return res.status(200).json({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            accessToken,
+            data,
             message: 'Hurry! You are now loggin in.',
             success: true
         })
