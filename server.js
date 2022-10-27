@@ -22,18 +22,10 @@ app.use(bodyParser.urlencoded({extended: false, limit: '30mb'}));
 app.set("trust proxy", 1);
 app.use(cors());
 app.use(cors({
-      AllowCredentials: true,
     origin: [
     process.env.URL_REACT,
     'http://localhost:3000'
 ] }));
- app.use(function (req, res, next) {
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
-            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
-            res.header('Access-Control-Allow-Credentials', true);
-            next();
-        })
 app.use(cookieParser())
 
 //init webrouter
