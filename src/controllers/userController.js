@@ -43,7 +43,7 @@ export const deleteWithAuthen = async (req, res)=> {
 // @DESC to register user (user, admin)
 
 export const registerUser = async(userDesc, res) =>{
-    const {email, password,confirmPassword} = userDesc
+    const {email, password} = userDesc
    try{
      // Validate email
     let emailNotRegistered = await validateEmail(email);
@@ -129,17 +129,19 @@ export const loginUser = async (userDesc, res) => {
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
         refreshTokensList.push(refreshToken);
-        //  Cookie:
+        //  Cookie:                                                                
         res.cookie("refreshToken", refreshToken,{
             httpOnly: true, 
             path: '/', 
             secure: false,
             sameSite: "strict"
         })
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         const {password, ...others} = user._doc;
         return res.status(200).json({
-            ...others,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
             accessToken,
             message: 'Hurry! You are now loggin in.',
             success: true
